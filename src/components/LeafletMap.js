@@ -7,9 +7,9 @@ class LeafletMap extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
-			lat: 51.505,
-			lng: -0.09,
-			zoom: 13,
+			lat: 49.2827,
+			lng: -123.1207,
+			zoom: 12,
 		};
 	}
 
@@ -17,10 +17,10 @@ class LeafletMap extends Component {
 		const position = [this.state.lat, this.state.lng];
 		return (
 			<div>
-				<Map center={position} zoom={this.state.zoom} style={{height : '98vh'}}>
+				<Map center={position} zoom={this.state.zoom} style={{height : '98vh', zIndex: 0}}>
 					<TileLayer
-						attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+						attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+						url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
 					/>
 					<Marker position={position}>
 						<Popup>
