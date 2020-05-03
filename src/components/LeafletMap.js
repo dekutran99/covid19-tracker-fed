@@ -3,13 +3,17 @@ import {
 	Map,
 	TileLayer,
 	Marker,
-	CircleMarker,
-	Popup
+	Popup,
 } from "react-leaflet";
-import L from 'leaflet';
+import L, { marker, LatLng } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import {
+	Button,
+} from 'react-bootstrap';
+
+import MarkerCard from './MarkerCard';
 
 class LeafletMap extends Component {
 	constructor(props) {
@@ -23,6 +27,22 @@ class LeafletMap extends Component {
 			markers: []
 
 		}
+	}
+
+	componentDidMount() {
+		// var myHeaders = new Headers();
+
+		// var requestOptions = {
+		// 	method: 'GET',
+		// 	headers: myHeaders,
+		// 	redirect: 'follow',
+		// 	credentials: 'include'
+		// };
+
+		// fetch("https://covid-19-tracker-276100.wl.r.appspot.com/logs/log", requestOptions)
+		// 	.then(response => response.text())
+		// 	.then(result => console.log(result))
+		// 	.catch(error => console.log('error', error));
 	}
 
 	addMarker = (e) => {
@@ -42,13 +62,36 @@ class LeafletMap extends Component {
 			{
 				markers: markers
 			}
-		) 
-		// this.setState(prevState => {
-		//   const markers = [...prevState.markers];
-		//   markers[markerIndex] = latLng;
-		//   return { markers: markers };
-		// });
-	 };
+		)
+	};
+
+	fetchLogs = () => {
+		// var myHeaders = new Headers();
+
+		var requestOptions = {
+			method: 'POST',
+			// headers: myHeaders,
+			redirect: 'follow',
+			credentials: 'include',
+		};
+
+		fetch("http://127.0.0.1:8000/logs/log/", requestOptions)
+			.then(response => response.json())
+			.then(result => {
+				for (let i = 0; i < result.length; i++) {
+					const position = L.latLng({
+						"lat": parseFloat(result[i]['latitude']), 
+						"lng": parseFloat(result[i]['longitude'])
+					})
+					// const position = [parseFloat(result[i]['latitude']), parseFloat(result[i]['longitude'])]
+					const { markers } = this.state
+					markers.push(position)
+					this.setState({ markers })
+					console.log(this.state.markers)
+				}
+			})
+			.catch(error => console.log('error', error));
+	}
 
 	render() {
 		const position = [this.state.default.lat, this.state.default.lng];
@@ -59,8 +102,10 @@ class LeafletMap extends Component {
 			iconUrl: require('leaflet/dist/images/marker-icon.png'),
 			shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 		});
+
 		return (
 			<div className='pt-5'>
+				<Button onClick={this.fetchLogs}>Show</Button>
 				<Map
 					center={position}
 					zoom={this.state.default.zoom}
@@ -80,7 +125,9 @@ class LeafletMap extends Component {
 							onDragend={this.updateMarker}
 						>
 							<Popup>
-								<span>Popup</span>
+								<span>
+									<MarkerCard />
+								</span>
 							</Popup>
 						</Marker>
 					)}
