@@ -9,6 +9,7 @@ import {
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MarkerCard from './MarkerCard';
 
 
 class LeafletMap extends Component {
@@ -80,7 +81,9 @@ class LeafletMap extends Component {
 							onDragend={this.updateMarker}
 						>
 							<Popup>
-								<span>Popup</span>
+								<span>
+									<MarkerCard />
+								</span>
 							</Popup>
 						</Marker>
 					)}
