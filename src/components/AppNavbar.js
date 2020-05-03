@@ -15,7 +15,7 @@ class AppNavbar extends React.Component {
 		return (
 			<div className="" style={{ width: '100%', position: "fixed", zIndex: 5 }}>
 				<Navbar className="p-0" bg="light" expand="sm">
-					<Navbar.Brand className="">Covid-19 Tracker</Navbar.Brand>
+					<Navbar.Brand className="pl-2">Covid-19 Tracker</Navbar.Brand>
 				</Navbar>
 			</div>
 		)
