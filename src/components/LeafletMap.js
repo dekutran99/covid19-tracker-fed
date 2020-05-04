@@ -30,26 +30,45 @@ class LeafletMap extends Component {
 	}
 
 	componentDidMount() {
-		// var myHeaders = new Headers();
+		var myHeaders = new Headers();
 
-		// var requestOptions = {
-		// 	method: 'GET',
-		// 	headers: myHeaders,
-		// 	redirect: 'follow',
-		// 	credentials: 'include'
-		// };
+		var requestOptions = {
+			method: 'GET',
+			headers: myHeaders,
+			redirect: 'follow',
+			credentials: 'include',
+		};
 
-		// fetch("https://covid-19-tracker-276100.wl.r.appspot.com/logs/log", requestOptions)
-		// 	.then(response => response.text())
-		// 	.then(result => console.log(result))
-		// 	.catch(error => console.log('error', error));
+		fetch("http://127.0.0.1:8000/logs/log/", requestOptions)
+			.then(response => response.json())
+			.then(result => {
+				for (let i = 0; i < result.length; i++) {
+					const position = L.latLng({
+						"lat": parseFloat(result[i]['latitude']), 
+						"lng": parseFloat(result[i]['longitude'])
+					});
+					const markers = this.state.markers;
+					markers.push(position);
+					this.setState(
+						{
+							markers: markers
+						}
+					);
+					console.log(this.state.markers);
+				}
+			})
+			.catch(error => console.log('error', error));
 	}
 
 	addMarker = (e) => {
-		const { markers } = this.state
-		markers.push(e.latlng)
-		this.setState({ markers })
-		console.log(this.state.markers)
+		const markers = this.state.markers;
+		markers.push(e.latlng);
+		this.setState(
+			{
+				markers: markers	
+			}
+		);
+		console.log(this.state.markers);
 	}
 
 	updateMarker = (e) => {
@@ -62,36 +81,9 @@ class LeafletMap extends Component {
 			{
 				markers: markers
 			}
-		)
+		);
+		console.log(this.state.markers);
 	};
-
-	fetchLogs = () => {
-		// var myHeaders = new Headers();
-
-		var requestOptions = {
-			method: 'POST',
-			// headers: myHeaders,
-			redirect: 'follow',
-			credentials: 'include',
-		};
-
-		fetch("http://127.0.0.1:8000/logs/log/", requestOptions)
-			.then(response => response.json())
-			.then(result => {
-				for (let i = 0; i < result.length; i++) {
-					const position = L.latLng({
-						"lat": parseFloat(result[i]['latitude']), 
-						"lng": parseFloat(result[i]['longitude'])
-					})
-					// const position = [parseFloat(result[i]['latitude']), parseFloat(result[i]['longitude'])]
-					const { markers } = this.state
-					markers.push(position)
-					this.setState({ markers })
-					console.log(this.state.markers)
-				}
-			})
-			.catch(error => console.log('error', error));
-	}
 
 	render() {
 		const position = [this.state.default.lat, this.state.default.lng];
@@ -105,7 +97,6 @@ class LeafletMap extends Component {
 
 		return (
 			<div className='pt-5'>
-				<Button onClick={this.fetchLogs}>Show</Button>
 				<Map
 					center={position}
 					zoom={this.state.default.zoom}
@@ -126,7 +117,7 @@ class LeafletMap extends Component {
 						>
 							<Popup>
 								<span>
-									<MarkerCard />
+									<MarkerCard position={position}/>
 								</span>
 							</Popup>
 						</Marker>

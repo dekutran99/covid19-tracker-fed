@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
 	Navbar,
 	Nav,
@@ -14,7 +14,7 @@ function MyVerticallyCenteredModal(props) {
 	const [user, setUser] = React.useState('');
 	const [pass, setPass] = React.useState('');
 
-	const handleSubmit = (evt) => {
+	async function handleSubmit(evt) {
 		evt.preventDefault();
 
 		// Getting login authorization from api.codegram.dev
@@ -38,7 +38,7 @@ function MyVerticallyCenteredModal(props) {
 		// indicate where there is error in request
 		let error;
 
-		fetch("http://127.0.0.1:8000/auth/login", requestOptions)
+		await fetch("http://127.0.0.1:8000/auth/login", requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					error = true;
@@ -49,9 +49,7 @@ function MyVerticallyCenteredModal(props) {
 			})
 			.then(data => {
 				if (error === false) {
-					
-					
-
+					console.log('Logged in')
 				} else if (error === true) {
 					console.log('Failed');
 					console.log(data);
@@ -61,7 +59,8 @@ function MyVerticallyCenteredModal(props) {
 				error => console.log('error', error)
 			);
 		
-		props.onHide()
+		props.onHide();
+		window.location.reload();
 	}
 
 	return (
@@ -82,7 +81,6 @@ function MyVerticallyCenteredModal(props) {
 						<Form.Label>User Name</Form.Label>
 						<Form.Control
 							onChange={e => setUser(e.target.value)}
-							// value={user}
 							placeholder="Enter user name"
 						/>
 					</Form.Group>
@@ -91,7 +89,6 @@ function MyVerticallyCenteredModal(props) {
 						<Form.Label>Password</Form.Label>
 						<Form.Control
 							onChange={e => setPass(e.target.value)}
-							// value={this.state.password}
 							type="password"
 							placeholder="Password"
 						/>
