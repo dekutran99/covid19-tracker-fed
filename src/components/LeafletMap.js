@@ -100,8 +100,8 @@ class LeafletMap extends Component {
 					onClick={this.addMarker}
 				>
 					<TileLayer
-						attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-						url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+						attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
 					/>
 					{this.state.markers.map((position, idx) =>
 						<Marker
