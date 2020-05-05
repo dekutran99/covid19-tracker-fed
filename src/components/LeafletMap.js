@@ -5,13 +5,9 @@ import {
 	Marker,
 	Popup,
 } from "react-leaflet";
-import L, { marker, LatLng } from 'leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import {
-	Button,
-} from 'react-bootstrap';
 
 import MarkerCard from './MarkerCard';
 
@@ -30,9 +26,9 @@ class LeafletMap extends Component {
 	}
 
 	componentDidMount() {
-		var myHeaders = new Headers();
+		let myHeaders = new Headers();
 
-		var requestOptions = {
+		let requestOptions = {
 			method: 'GET',
 			headers: myHeaders,
 			redirect: 'follow',
@@ -44,7 +40,7 @@ class LeafletMap extends Component {
 			.then(result => {
 				for (let i = 0; i < result.length; i++) {
 					const position = L.latLng({
-						"lat": parseFloat(result[i]['latitude']), 
+						"lat": parseFloat(result[i]['latitude']),
 						"lng": parseFloat(result[i]['longitude'])
 					});
 					const markers = this.state.markers;
@@ -65,7 +61,7 @@ class LeafletMap extends Component {
 		markers.push(e.latlng);
 		this.setState(
 			{
-				markers: markers	
+				markers: markers
 			}
 		);
 		console.log(this.state.markers);
@@ -117,7 +113,7 @@ class LeafletMap extends Component {
 						>
 							<Popup>
 								<span>
-									<MarkerCard position={position}/>
+									<MarkerCard position={position} />
 								</span>
 							</Popup>
 						</Marker>

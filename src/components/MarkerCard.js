@@ -11,33 +11,42 @@ function MarkerCard(props) {
     const [startTime, setStartTime] = React.useState('');
     const [endTime, setEndTime] = React.useState('');
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
-        var myHeaders = new Headers();
+        let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Content-Type", "text/plain");
-        myHeaders.append("Cookie", "auth_token=5c6499a57496e3ce46291f991bd58c62b2f2a0a18821896b6d48dbaeff3a896e");
+        
+        let raw = {
+            "latitude": props.position.lat,
+            "longitude": props.position.lng,
+            "log_start": startTime,
+            "log_end": endTime
+        };
 
-        var raw = "{\n    \"latitude\": \"69.23489236336972000\",\n    \"longitude\": \"-69.08944702148439000\",\n    \"log_start\": \"2020-05-03T09:37:41Z\",\n    \"log_end\": \"2020-05-03T10:00:00Z\"\n}";
+        let body = JSON.stringify(raw);
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'POST',
+            mode: 'no-cors',
             headers: myHeaders,
-            body: raw,
+            body: body,
             redirect: 'follow',
             credentials: 'include',
         };
 
-        fetch("http://127.0.0.1:8000/logs/log/", requestOptions)
+        await fetch("http://127.0.0.1:8000/logs/log/", requestOptions)
             .then(response => response.json())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
+        
+        window.location.reload();
 
     }
 
     function handleDelete(e) {
-        console.log('yeehawww')
+        console.log('yeehawww');
     }
 
     return (
@@ -68,7 +77,7 @@ function MarkerCard(props) {
                 {" "}
                 <Button variant="danger" size="sm" active onClick={handleDelete}>
                     Delete
-                    </Button>
+                </Button>
             </div>
         </div>
     );

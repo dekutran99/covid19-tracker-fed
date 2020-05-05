@@ -19,18 +19,18 @@ function MyVerticallyCenteredModal(props) {
 
 		// Getting login authorization from api.codegram.dev
 		let myHeaders = new Headers();
-		myHeaders.append("Content-Type", "application/json");
-		myHeaders.append("Accept", "application/json");
 
-		let username = `${user}`
-		let password = `${pass}`
-		
-		let raw = "{\n	\"username\": \"" + username + "\",\n	\"password\": \"" + password + "\"\n}";
+		let raw = {
+			"username": user,
+			"password": pass
+		}
+
+		let body = JSON.stringify(raw)
 
 		let requestOptions = {
 			method: 'POST',
 			headers: myHeaders,
-			body: raw,
+			body: body,
 			redirect: 'follow',
 			credentials: 'include'
 		};
@@ -58,7 +58,7 @@ function MyVerticallyCenteredModal(props) {
 			.catch(
 				error => console.log('error', error)
 			);
-		
+
 		props.onHide();
 		window.location.reload();
 	}
@@ -108,26 +108,10 @@ function MyVerticallyCenteredModal(props) {
 	);
 }
 
-// class AppNavbar extends React.Component {
-
-// 	render() {
-// 		return (
-
-// 			<div className="" style={{ width: '100%', position: "fixed", zIndex: 5 }}>
-// 				<Navbar className="p-0" bg="light" expand="sm">
-// 					<Navbar.Brand className="pl-2">Covid-19 Tracker</Navbar.Brand>
-// 					<Nav className="justify-content-end" style={{ width: "100%" }}>
-
-// 					</Nav>
-// 				</Navbar>
-// 			</div>
-// 		)
-// 	}
-
-// }
-
 function AppNavbar() {
+
 	const [modalShow, setModalShow] = React.useState(false);
+
 	return (
 
 		<div className="" style={{ width: '100%', position: "fixed", zIndex: 5 }}>
