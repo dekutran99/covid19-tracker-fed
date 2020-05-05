@@ -38,7 +38,7 @@ function MyVerticallyCenteredModal(props) {
 		// indicate where there is error in request
 		let error;
 
-		await fetch("http://127.0.0.1:8000/auth/login", requestOptions)
+		await fetch("https://covid-19-tracker-276100.wl.r.appspot.com/auth/login", requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					error = true;

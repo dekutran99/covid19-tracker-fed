@@ -35,7 +35,7 @@ class LeafletMap extends Component {
 			credentials: 'include',
 		};
 
-		fetch("http://127.0.0.1:8000/logs/log/", requestOptions)
+		fetch("https://covid-19-tracker-276100.wl.r.appspot.com/logs/log/", requestOptions)
 			.then(response => response.json())
 			.then(result => {
 				for (let i = 0; i < result.length; i++) {

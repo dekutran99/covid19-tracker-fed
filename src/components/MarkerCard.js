@@ -36,7 +36,7 @@ function MarkerCard(props) {
             credentials: 'include',
         };
 
-        await fetch("http://127.0.0.1:8000/logs/log/", requestOptions)
+        await fetch("https://covid-19-tracker-276100.wl.r.appspot.com/logs/log/", requestOptions)
             .then(response => response.json())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
