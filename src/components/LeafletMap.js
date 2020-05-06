@@ -25,9 +25,7 @@ class LeafletMap extends Component {
 				zoom: 12,
 			},
 			logs: [],
-			positions: []
-
-		}
+		};
 	}
 
 	componentDidMount() {
@@ -72,16 +70,28 @@ class LeafletMap extends Component {
 			longitude: e.latlng.lng,
 			log_start: '2020-01-01T00:00',
 			log_end: '2020-01-01T00:00'
-		}
+		};
+		logs.push(log);
+		this.setState(
+			{
+				logs: logs
+			}
+		);
+	}
+
+	updateMarker = (e) => {
+		let logIdx = e.target.options.markerIndex;
+		let logs = this.state.logs;
+		let log = logs[logIdx];
+		let latlng = e.target.getLatLng();
+		log.latitude = latlng.lat
+		log.longitude = latlng.lng;
 		logs.push(log);
 		this.setState(
 			{
 				logs: logs
 			}
 		)
-	}
-
-	updateMarker = (e) => {
 	};
 
 	render() {

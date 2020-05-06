@@ -19,7 +19,6 @@ function RegisterModal(props) {
 	const [pass, setPass] = React.useState('');
 
 	async function register(evt) {
-		evt.preventDefault();
 
 		// let url = "http://127.0.0.1:8000/"
 		let url = "https://covid-19-tracker-276100.wl.r.appspot.com/"
@@ -185,10 +184,9 @@ function LoginModal(props) {
 	const [pass, setPass] = React.useState('');
 
 	async function signIn(evt) {
-		evt.preventDefault();
 
-		let url = "http://127.0.0.1:8000/"
-		// let url = "https://covid-19-tracker-276100.wl.r.appspot.com/"
+		// let url = "http://127.0.0.1:8000/"
+		let url = "https://covid-19-tracker-276100.wl.r.appspot.com/"
 		let path = "auth/login"
 
 
