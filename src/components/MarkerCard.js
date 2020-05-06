@@ -21,6 +21,7 @@ function MarkerCard(props) {
         let myHeaders = new Headers();
 
         let raw = {
+            id: props.log.id,
             latitude: props.log.latitude,
             longitude: props.log.longitude,
             log_start: startTime,
@@ -29,19 +30,34 @@ function MarkerCard(props) {
 
         let body = JSON.stringify(raw);
 
-        let requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: body,
-            redirect: 'follow',
-            credentials: 'include',
-        };
+        if (raw.id == null) {
+            let requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: body,
+                redirect: 'follow',
+                credentials: 'include',
+            };
 
-        await fetch(url + path, requestOptions)
-            .then(response => response.json())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+            await fetch(url + path, requestOptions)
+                .then(response => response.json())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+        } else {
+            path = "logs/update/"
+            let requestOptions = {            
+                method: 'POST',
+                headers: myHeaders,
+                body: body,
+                redirect: 'follow',
+                credentials: 'include'
+            }
 
+            await fetch(url + path, requestOptions)
+                .then(response => response.json())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+        }
         window.location.reload();
 
     }
