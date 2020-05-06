@@ -4,12 +4,16 @@ import {
 	TileLayer,
 	Marker,
 	Popup,
+	LayersControl,
+	LayerGroup,
 } from "react-leaflet";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import MarkerCard from './MarkerCard';
+
+const { BaseLayer, Overlay } = LayersControl
 
 class LeafletMap extends Component {
 	constructor(props) {
@@ -20,12 +24,18 @@ class LeafletMap extends Component {
 				lng: -123.1207,
 				zoom: 12,
 			},
-			markers: []
+			logs: [],
+			positions: []
 
 		}
 	}
 
 	componentDidMount() {
+
+		// let url = "http://127.0.0.1:8000/"
+		let url = "https://covid-19-tracker-276100.wl.r.appspot.com/"
+		let path = "logs/log/"
+
 		let myHeaders = new Headers();
 
 		let requestOptions = {
@@ -35,54 +45,46 @@ class LeafletMap extends Component {
 			credentials: 'include',
 		};
 
-		fetch("https://covid-19-tracker-276100.wl.r.appspot.com/logs/log/", requestOptions)
+		fetch(url + path, requestOptions)
 			.then(response => response.json())
 			.then(result => {
 				for (let i = 0; i < result.length; i++) {
-					const position = L.latLng({
-						"lat": parseFloat(result[i]['latitude']),
-						"lng": parseFloat(result[i]['longitude'])
-					});
-					const markers = this.state.markers;
-					markers.push(position);
+					result[i].latitude = parseFloat(result[i].latitude);
+					result[i].longitude = parseFloat(result[i].longitude);
+					result[i].log_start = result[i].log_start.substring(0, result[i].log_start.length - 1)
+					result[i].log_end = result[i].log_end.substring(0, result[i].log_end.length - 1)
+					let logs = this.state.logs;
+					logs.push(result[i]);
 					this.setState(
 						{
-							markers: markers
+							logs: logs
 						}
 					);
-					console.log(this.state.markers);
 				}
 			})
 			.catch(error => console.log('error', error));
 	}
 
 	addMarker = (e) => {
-		const markers = this.state.markers;
-		markers.push(e.latlng);
+		let logs = this.state.logs;
+		let log = {
+			latitude: e.latlng.lat,
+			longitude: e.latlng.lng,
+			log_start: '2020-01-01T00:00',
+			log_end: '2020-01-01T00:00'
+		}
+		logs.push(log);
 		this.setState(
 			{
-				markers: markers
+				logs: logs
 			}
-		);
-		console.log(this.state.markers);
+		)
 	}
 
 	updateMarker = (e) => {
-		const latLng = e.target.getLatLng(); //get updated marker LatLng
-		const markerIndex = e.target.options.markerIndex; //get marker index
-		//update
-		const markers = this.state.markers;
-		markers[markerIndex] = latLng;
-		this.setState(
-			{
-				markers: markers
-			}
-		);
-		console.log(this.state.markers);
 	};
 
 	render() {
-		const position = [this.state.default.lat, this.state.default.lng];
 		delete L.Icon.Default.prototype._getIconUrl;
 
 		L.Icon.Default.mergeOptions({
@@ -94,34 +96,47 @@ class LeafletMap extends Component {
 		return (
 			<div className='pt-5'>
 				<Map
-					center={position}
+					center={[this.state.default.lat, this.state.default.lng]}
 					zoom={this.state.default.zoom}
 					style={{ height: '95vh', zIndex: 0 }}
 					onClick={this.addMarker}
 				>
-					<TileLayer
-						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-						attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-					/>
-					{this.state.markers.map((position, idx) =>
-						<Marker
-							key={`marker-${idx}`}
-							markerIndex={idx}
-							position={position}
-							draggable={true}
-							onDragend={this.updateMarker}
-						>
-							<Popup>
-								<span>
-									<MarkerCard position={position} />
-								</span>
-							</Popup>
-						</Marker>
-					)}
+					<LayersControl>
+						<BaseLayer checked name="Map">
+							<LayerGroup>
+								<TileLayer
+									url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+									attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+								/>
+							</LayerGroup>
+						</BaseLayer>
+						<Overlay checked name="Markers">
+							<LayerGroup>
+								{this.state.logs.map((log, idx) =>
+									<Marker
+										key={`marker-${idx}`}
+										markerIndex={idx}
+										position={
+											[log.latitude, log.longitude]
+										}
+										draggable={true}
+										onDragend={this.updateMarker}
+									>
+										<Popup>
+											<span>
+												<MarkerCard log={log} />
+											</span>
+										</Popup>
+									</Marker>
+								)}
+							</LayerGroup>
+						</Overlay>
+					</LayersControl>
 				</Map>
 			</div>
 		);
 	}
 }
+
 
 export default LeafletMap;
