@@ -4,7 +4,6 @@ import {
     Button,
     Form,
 } from 'react-bootstrap';
-import "bootstrap/dist/css/bootstrap.min.css";
 
 function MarkerCard(props) {
 
@@ -15,7 +14,7 @@ function MarkerCard(props) {
         e.preventDefault();
 
         // let url = "http://127.0.0.1:8000/"
-        let url = "https://covid-19-tracker-276100.wl.r.appspot.com/"
+        let url = "https://apic19gt.tranquanghuy.me/"
         let path = "logs/log/"
 
         let myHeaders = new Headers();
@@ -44,9 +43,8 @@ function MarkerCard(props) {
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
         } else {
-            path = "logs/update/"
-            let requestOptions = {            
-                method: 'POST',
+            let requestOptions = {
+                method: 'PUT',
                 headers: myHeaders,
                 body: body,
                 redirect: 'follow',
@@ -62,8 +60,40 @@ function MarkerCard(props) {
 
     }
 
-    function handleDelete(e) {
-        console.log('yeehawww');
+    async function handleDelete(e) {
+        e.preventDefault();
+
+        // let url = "http://127.0.0.1:8000/"
+        let url = "https://apic19gt.tranquanghuy.me/"
+        let path = "logs/log/"
+
+        let myHeaders = new Headers();
+
+        let raw = {
+            id: props.log.id,
+            latitude: props.log.latitude,
+            longitude: props.log.longitude,
+            log_start: startTime,
+            log_end: endTime
+        };
+
+        let body = JSON.stringify(raw);
+
+        let requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            body: body,
+            redirect: 'follow',
+            credentials: 'include'
+        }
+
+        await fetch(url + path, requestOptions)
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+        window.location.reload();
+
     }
 
     return (
@@ -90,13 +120,16 @@ function MarkerCard(props) {
                         />
                     </Form.Group>
                 </Form>
-                <Button variant="primary" size="sm" active onClick={handleSubmit}>
-                    Submit
+                <div>
+                    <Button variant="primary" size="sm" active onClick={handleSubmit}>
+                        Submit
                     </Button>
-                {" "}
-                <Button variant="danger" size="sm" active onClick={handleDelete}>
-                    Delete
-                </Button>
+                </div>
+                <div>
+                    <Button variant="danger" size="sm" active onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </div>
             </div>
         </div>
     );

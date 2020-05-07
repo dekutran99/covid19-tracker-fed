@@ -9,7 +9,6 @@ import {
 } from "react-leaflet";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import MarkerCard from './MarkerCard';
 
@@ -30,8 +29,8 @@ class LeafletMap extends Component {
 
 	componentDidMount() {
 
-		let url = "http://127.0.0.1:8000/"
-		// let url = "https://covid-19-tracker-276100.wl.r.appspot.com/"
+		// let url = "http://127.0.0.1:8000/"
+		let url = "https://apic19gt.tranquanghuy.me/"
 		let path = "logs/log/"
 
 		let myHeaders = new Headers();
@@ -104,7 +103,7 @@ class LeafletMap extends Component {
 		});
 
 		return (
-			<div className='pt-5'>
+			<div style={{paddingTop: "40px"}}>
 				<Map
 					center={[this.state.default.lat, this.state.default.lng]}
 					zoom={this.state.default.zoom}

@@ -9,7 +9,6 @@ import {
 	Col,
 	InputGroup
 } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function RegisterModal(props) {
@@ -21,11 +20,9 @@ function RegisterModal(props) {
 	async function register(evt) {
 
 		// let url = "http://127.0.0.1:8000/"
-		let url = "https://covid-19-tracker-276100.wl.r.appspot.com/"
+		let url = "https://apic19gt.tranquanghuy.me/"
 		let path = "auth/register"
 
-
-		// Getting login authorization from api.codegram.dev
 		let myHeaders = new Headers();
 
 		let raw = {
@@ -94,7 +91,7 @@ function RegisterModal(props) {
 						<InputGroup className="input-group-alternative mb-3">
 							<InputGroup.Prepend>
 								<InputGroup.Text>
-									<i className="ni ni-circle-08" />
+									<i className="fa" />
 								</InputGroup.Text>
 							</InputGroup.Prepend>
 							<Form.Control
@@ -109,7 +106,7 @@ function RegisterModal(props) {
 						<InputGroup className="input-group-alternative mb-3">
 							<InputGroup.Prepend>
 								<InputGroup.Text>
-									<i className="ni ni-email-83" />
+									<i className="fa" />
 								</InputGroup.Text>
 							</InputGroup.Prepend>
 							<Form.Control
@@ -124,7 +121,7 @@ function RegisterModal(props) {
 						<InputGroup className="input-group-alternative">
 							<InputGroup.Prepend>
 								<InputGroup.Text>
-									<i className="ni ni-lock-circle-open" />
+									<i className="fa" />
 								</InputGroup.Text>
 							</InputGroup.Prepend>
 							<Form.Control
@@ -186,11 +183,9 @@ function LoginModal(props) {
 	async function signIn(evt) {
 
 		// let url = "http://127.0.0.1:8000/"
-		let url = "https://covid-19-tracker-276100.wl.r.appspot.com/"
+		let url = "https://apic19gt.tranquanghuy.me/"
 		let path = "auth/login"
 
-
-		// Getting login authorization from api.codegram.dev
 		let myHeaders = new Headers();
 
 		let raw = {
@@ -261,7 +256,7 @@ function LoginModal(props) {
 						<InputGroup className="input-group-alternative">
 							<InputGroup.Prepend>
 								<InputGroup.Text>
-									<i className="ni ni-circle-08" />
+									<i className="fa" />
 								</InputGroup.Text>
 							</InputGroup.Prepend>
 							<Form.Control
@@ -276,7 +271,7 @@ function LoginModal(props) {
 						<InputGroup className="input-group-alternative">
 							<InputGroup.Prepend>
 								<InputGroup.Text>
-									<i className="ni ni-lock-circle-open" />
+									<i className="fa" />
 								</InputGroup.Text>
 							</InputGroup.Prepend>
 							<Form.Control
@@ -323,27 +318,65 @@ function AppNavbar() {
 	const [login, setLogin] = React.useState(false);
 	const [register, setRegister] = React.useState(false);
 
+	// React.useEffect((e) => {
+	// 	async function checkLoginStatus() {
+
+	// 		let url = "http://127.0.0.1:8000/"
+	// 		// let url = "https://apic19gt.tranquanghuy.me/"
+	// 		let path = "auth/log/"
+
+	// 		let myHeaders = new Headers();
+
+
+	// 		let requestOptions = {
+	// 			method: 'POST',
+	// 			headers: myHeaders,
+	// 			redirect: 'follow',
+	// 			credentials: 'include'
+	// 		}
+
+	// 		await fetch(url + path, requestOptions)
+	// 			.then(response => response.json())
+	// 			.then(result => console.log(result))
+	// 			.catch(error => console.log('error', error));
+
+	// 	}
+	// 	checkLoginStatus();
+	// });
+
 	return (
 
 		<div className="" style={{ width: '100%', position: "fixed", zIndex: 5 }}>
 			<Navbar className="p-0" bg="light" expand="sm">
-				<Navbar.Brand className="pl-2">Covid-19 Tracker</Navbar.Brand>
-				<Nav className="justify-content-end" style={{ width: "100%" }}>
-					<Button variant="primary" onClick={() => setLogin(true)}>
-						Login
-      				</Button>
-					<LoginModal
-						show={login}
-						onHide={() => setLogin(false)}
-					/>
-					<Button variant="primary" onClick={() => setRegister(true)}>
-						Register
-      				</Button>
-					<RegisterModal
-						show={register}
-						onHide={() => setRegister(false)}
-					/>
-				</Nav>
+				<Row className="m-auto" style={{ width: "100%" }}>
+					<Col className="px-0">
+						<Navbar.Brand className="pl-2 mr-0">Covid-19 Tracker</Navbar.Brand>
+					</Col>
+					<Col className="px-0 d-none d-md-block">
+					</Col>
+					<Col className="m-auto px-0">
+						<Nav className="justify-content-end" style={{ width: "100%", float: "right" }}>
+							<div className="px-1" style={{ maxWidth: "60px" }}>
+								<Button variant="primary" size="sm" onClick={() => setLogin(true)}>
+									Login
+      							</Button>
+								<LoginModal
+									show={login}
+									onHide={() => setLogin(false)}
+								/>
+							</div>
+							<div className="px-1 pr-2">
+								<Button variant="primary" size="sm" onClick={() => setRegister(true)}>
+									Register
+      							</Button>
+								<RegisterModal
+									show={register}
+									onHide={() => setRegister(false)}
+								/>
+							</div>
+						</Nav>
+					</Col>
+				</Row>
 			</Navbar>
 		</div>
 	)
