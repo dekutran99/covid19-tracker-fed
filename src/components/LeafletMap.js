@@ -48,8 +48,6 @@ class LeafletMap extends Component {
 				for (let i = 0; i < result.length; i++) {
 					result[i].latitude = parseFloat(result[i].latitude);
 					result[i].longitude = parseFloat(result[i].longitude);
-					result[i].log_start = result[i].log_start.substring(0, result[i].log_start.length - 1)
-					result[i].log_end = result[i].log_end.substring(0, result[i].log_end.length - 1)
 					let logs = this.state.logs;
 					logs.push(result[i]);
 					this.setState(

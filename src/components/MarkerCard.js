@@ -24,7 +24,8 @@ function MarkerCard(props) {
             latitude: props.log.latitude,
             longitude: props.log.longitude,
             log_start: startTime,
-            log_end: endTime
+            log_end: endTime,
+            time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone
         };
 
         let body = JSON.stringify(raw);
@@ -39,8 +40,6 @@ function MarkerCard(props) {
             };
 
             await fetch(url + path, requestOptions)
-                .then(response => response.json())
-                .then(result => console.log(result))
                 .catch(error => console.log('error', error));
         } else {
             let requestOptions = {
@@ -52,8 +51,6 @@ function MarkerCard(props) {
             }
 
             await fetch(url + path, requestOptions)
-                .then(response => response.json())
-                .then(result => console.log(result))
                 .catch(error => console.log('error', error));
         }
         window.location.reload();
@@ -88,8 +85,6 @@ function MarkerCard(props) {
         }
 
         await fetch(url + path, requestOptions)
-            .then(response => response.json())
-            .then(result => console.log(result))
             .catch(error => console.log('error', error));
 
         window.location.reload();
@@ -120,16 +115,14 @@ function MarkerCard(props) {
                         />
                     </Form.Group>
                 </Form>
-                <div>
-                    <Button variant="primary" size="sm" active onClick={handleSubmit}>
-                        Submit
-                    </Button>
-                </div>
-                <div>
-                    <Button variant="danger" size="sm" active onClick={handleDelete}>
-                        Delete
-                    </Button>
-                </div>
+                <Button variant="primary" size="sm" active onClick={handleSubmit}>
+                    Submit
+                </Button>
+                {" "}
+                <Button variant="danger" size="sm" active onClick={handleDelete}>
+                    Delete
+                </Button>
+
             </div>
         </div>
     );
