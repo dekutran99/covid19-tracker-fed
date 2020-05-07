@@ -317,69 +317,141 @@ function AppNavbar() {
 
 	const [login, setLogin] = React.useState(false);
 	const [register, setRegister] = React.useState(false);
+	const [authStatus, setAuthStatus] = React.useState(null);
 
-	// React.useEffect((e) => {
-	// 	async function checkLoginStatus() {
+	React.useEffect((e) => {
+		async function checkLoginStatus() {
 
-	// 		let url = "http://127.0.0.1:8000/"
-	// 		// let url = "https://apic19gt.tranquanghuy.me/"
-	// 		let path = "auth/log/"
+			// let url = "http://127.0.0.1:8000/"
+			let url = "https://apic19gt.tranquanghuy.me/"
+			let path = "auth/user"
 
-	// 		let myHeaders = new Headers();
+			let myHeaders = new Headers();
 
 
-	// 		let requestOptions = {
-	// 			method: 'POST',
-	// 			headers: myHeaders,
-	// 			redirect: 'follow',
-	// 			credentials: 'include'
-	// 		}
+			let requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				redirect: 'follow',
+				credentials: 'include'
+			}
 
-	// 		await fetch(url + path, requestOptions)
-	// 			.then(response => response.json())
-	// 			.then(result => console.log(result))
-	// 			.catch(error => console.log('error', error));
+			let error;
 
-	// 	}
-	// 	checkLoginStatus();
-	// });
+			await fetch(url + path, requestOptions)
+				.then(response => {
+					if (response.ok) {
+						error = false;
+					} else {
+						error = true;
+					}
+					return response.json();
+				}
+				)
+				.then(result => {
+					if (error === false) {
+						setAuthStatus(true);
+					} else {
+						setAuthStatus(false);
+					}
+				})
+				.catch(error => console.log('error', error));
 
-	return (
+		}
+		checkLoginStatus();
+	});
 
-		<div className="" style={{ width: '100%', position: "fixed", zIndex: 5 }}>
-			<Navbar className="p-0" bg="light" expand="sm">
-				<Row className="m-auto" style={{ width: "100%" }}>
-					<Col className="px-0">
-						<Navbar.Brand className="pl-2 mr-0">Covid-19 Tracker</Navbar.Brand>
-					</Col>
-					<Col className="px-0 d-none d-md-block">
-					</Col>
-					<Col className="m-auto px-0">
-						<Nav className="justify-content-end" style={{ width: "100%", float: "right" }}>
-							<div className="px-1" style={{ maxWidth: "60px" }}>
-								<Button variant="primary" size="sm" onClick={() => setLogin(true)}>
-									Login
-      							</Button>
-								<LoginModal
-									show={login}
-									onHide={() => setLogin(false)}
-								/>
-							</div>
-							<div className="px-1 pr-2">
-								<Button variant="primary" size="sm" onClick={() => setRegister(true)}>
-									Register
-      							</Button>
-								<RegisterModal
-									show={register}
-									onHide={() => setRegister(false)}
-								/>
-							</div>
-						</Nav>
-					</Col>
-				</Row>
-			</Navbar>
-		</div>
-	)
+	async function logOut() {
+		// let url = "http://127.0.0.1:8000/"
+		let url = "https://apic19gt.tranquanghuy.me/"
+		let path = "auth/logout"
+
+		let myHeaders = new Headers();
+
+
+		let requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			redirect: 'follow',
+			credentials: 'include'
+		}
+
+		await fetch(url + path, requestOptions)
+			.catch(error => console.log('error', error));
+
+		window.location.reload();
+	}
+
+	if (authStatus == null) {
+		return (
+			<div className="" style={{ width: '100%', position: "fixed", zIndex: 5 }}>
+				<Navbar className="p-0" bg="light" expand="sm">
+					<Nav className="mx-auto">
+						<strong>Please wait why we check if you are logged in.</strong>
+					</Nav>
+				</Navbar>
+			</div>
+		)
+	} else if (authStatus === false) {
+		return (
+			<div className="" style={{ width: '100%', position: "fixed", zIndex: 5 }}>
+				<Navbar className="p-0" bg="light" expand="sm">
+					<Row className="m-auto" style={{ width: "100%" }}>
+						<Col className="px-0">
+							<Navbar.Brand className="pl-2 mr-0">Covid-19 Tracker</Navbar.Brand>
+						</Col>
+						<Col className="px-0 d-none d-md-block">
+						</Col>
+						<Col className="m-auto px-0">
+							<Nav className="justify-content-end" style={{ width: "100%", float: "right" }}>
+								<div className="px-1" style={{ maxWidth: "60px" }}>
+									<Button variant="primary" size="sm" onClick={() => setLogin(true)}>
+										Login
+									  </Button>
+									<LoginModal
+										show={login}
+										onHide={() => setLogin(false)}
+									/>
+								</div>
+								<div className="px-1 pr-2">
+									<Button variant="primary" size="sm" onClick={() => setRegister(true)}>
+										Register
+									</Button>
+									<RegisterModal
+										show={register}
+										onHide={() => setRegister(false)}
+									/>
+								</div>
+							</Nav>
+						</Col>
+					</Row>
+				</Navbar>
+			</div>
+		);
+	} else {
+		return (
+			<div className="" style={{ width: '100%', position: "fixed", zIndex: 5 }}>
+				<Navbar className="p-0" bg="light" expand="sm">
+					<Row className="m-auto" style={{ width: "100%" }}>
+						<Col className="px-0">
+							<Navbar.Brand className="pl-2 mr-0">Covid-19 Tracker</Navbar.Brand>
+						</Col>
+						<Col className="px-0 d-none d-md-block">
+						</Col>
+						<Col className="m-auto px-0">
+							<Nav className="justify-content-end" style={{ width: "100%", float: "right" }}>
+								<div className="px-1 pr-2">
+									<Button variant="primary" size="sm" onClick={logOut}>
+										Sign out
+									</Button>
+								</div>
+							</Nav>
+						</Col>
+					</Row>
+				</Navbar>
+			</div>
+		);
+	}
 
 }
 
