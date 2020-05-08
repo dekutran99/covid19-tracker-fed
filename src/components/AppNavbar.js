@@ -57,8 +57,12 @@ function RegisterModal(props) {
 				if (error === false) {
 					console.log('Sign up successful')
 				} else if (error === true) {
-					console.log('Failed');
-					console.log(data);
+					console.log('Signup failed');
+					let msg = '';
+					for (let key in data) {
+						msg += key + ': ' + data[key] + '\n'
+					}
+					alert(msg);
 				}
 			})
 			.catch(
@@ -219,8 +223,12 @@ function LoginModal(props) {
 				if (error === false) {
 					console.log('Logged in')
 				} else if (error === true) {
-					console.log('Failed');
-					console.log(data);
+					console.log('Login failed');
+					let msg = '';
+					for (let key in data) {
+						msg += key + ': ' + data[key] + '\n'
+					}
+					alert(msg);
 				}
 			})
 			.catch(
@@ -387,7 +395,7 @@ function AppNavbar() {
 			<div className="" style={{ width: '100%', position: "fixed", zIndex: 5 }}>
 				<Navbar className="p-0" bg="light" expand="sm">
 					<Nav className="mx-auto">
-						<strong>Please wait why we check if you are logged in.</strong>
+						<strong>Please wait while we check if you are logged in.</strong>
 					</Nav>
 				</Navbar>
 			</div>
@@ -434,7 +442,9 @@ function AppNavbar() {
 				<Navbar className="p-0" bg="light" expand="sm">
 					<Row className="m-auto" style={{ width: "100%" }}>
 						<Col className="px-0">
-							<Navbar.Brand className="pl-2 mr-0">Covid-19 Tracker</Navbar.Brand>
+							<Navbar.Brand className="pl-2 mr-0">
+								<strong>Covid-19 Tracker</strong>{" "}<small>(right click to add marker)</small>
+							</Navbar.Brand>
 						</Col>
 						<Col className="px-0 d-none d-md-block">
 						</Col>

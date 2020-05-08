@@ -3,6 +3,7 @@ import React from "react";
 import {
     Button,
     Form,
+    Card
 } from 'react-bootstrap';
 
 function MarkerCard(props) {
@@ -53,8 +54,8 @@ function MarkerCard(props) {
             await fetch(url + path, requestOptions)
                 .catch(error => console.log('error', error));
         }
+        
         window.location.reload();
-
     }
 
     async function handleDelete(e) {
@@ -88,13 +89,12 @@ function MarkerCard(props) {
             .catch(error => console.log('error', error));
 
         window.location.reload();
-
     }
 
     return (
-        <div className="card" style={{ width: "260px" }}>
-            <div className="card-body">
-                <h5 className="card-title">Location Information</h5>
+        <Card style={{ width: "260px" }}>
+            <Card.Body>
+                <Card.Title>Location Information</Card.Title>
                 <Form>
                     <Form.Group controlId="startTimeControl">
                         <Form.Label>Start Time</Form.Label>
@@ -123,8 +123,8 @@ function MarkerCard(props) {
                     Delete
                 </Button>
 
-            </div>
-        </div>
+            </Card.Body>
+        </Card>
     );
 }
 

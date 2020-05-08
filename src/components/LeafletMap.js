@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import {
 	Map,
 	TileLayer,
@@ -27,10 +28,14 @@ class LeafletMap extends Component {
 		};
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
+		
+		/********************************************************************************
+			Load users log 
+		********************************************************************************/
 
-		// let url = "http://127.0.0.1:8000/"
-		let url = "https://apic19gt.tranquanghuy.me/"
+		let url = "http://127.0.0.1:8000/"
+		// let url = "https://apic19gt.tranquanghuy.me/"
 		let path = "logs/log/"
 
 		let myHeaders = new Headers();
@@ -42,7 +47,7 @@ class LeafletMap extends Component {
 			credentials: 'include',
 		};
 
-		fetch(url + path, requestOptions)
+		await fetch(url + path, requestOptions)
 			.then(response => response.json())
 			.then(result => {
 				for (let i = 0; i < result.length; i++) {
@@ -58,6 +63,7 @@ class LeafletMap extends Component {
 				}
 			})
 			.catch(error => console.log('error', error));
+			
 	}
 
 	addMarker = (e) => {
@@ -74,6 +80,13 @@ class LeafletMap extends Component {
 				logs: logs
 			}
 		);
+	}
+
+	handleMapClick = (e) => {
+		if (e.type === 'click') {
+		} else if (e.type === 'contextmenu') {
+			this.addMarker(e);
+		}
 	}
 
 	updateMarker = (e) => {
@@ -101,44 +114,45 @@ class LeafletMap extends Component {
 		});
 
 		return (
-			<div style={{paddingTop: "40px"}}>
+			<div style={{ paddingTop: "40px" }}>
 				<Map
 					center={[this.state.default.lat, this.state.default.lng]}
 					zoom={this.state.default.zoom}
 					style={{ height: '95vh', zIndex: 0 }}
-					onClick={this.addMarker}
+					onClick={this.handleMapClick}
+					oncontextmenu={this.handleMapClick}
 				>
-					<LayersControl>
-						<BaseLayer checked name="Map">
-							<LayerGroup>
-								<TileLayer
-									url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-									attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-								/>
-							</LayerGroup>
-						</BaseLayer>
-						<Overlay checked name="Markers">
-							<LayerGroup>
-								{this.state.logs.map((log, idx) =>
-									<Marker
-										key={`marker-${idx}`}
-										markerIndex={idx}
-										position={
-											[log.latitude, log.longitude]
-										}
-										draggable={true}
-										onDragend={this.updateMarker}
-									>
-										<Popup>
-											<span>
-												<MarkerCard log={log} />
-											</span>
-										</Popup>
-									</Marker>
-								)}
-							</LayerGroup>
-						</Overlay>
-					</LayersControl>
+			<LayersControl>
+				<BaseLayer checked name="Map">
+					<LayerGroup>
+						<TileLayer
+							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+							attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+						/>
+					</LayerGroup>
+				</BaseLayer>
+				<Overlay checked name="Markers">
+					<LayerGroup>
+						{this.state.logs.map((log, idx) =>
+							<Marker
+								key={`marker-${idx}`}
+								markerIndex={idx}
+								position={
+									[log.latitude, log.longitude]
+								}
+								draggable={true}
+								onDragend={this.updateMarker}
+							>
+								<Popup>
+									<span>
+										<MarkerCard log={log} />
+									</span>
+								</Popup>
+							</Marker>
+						)}
+					</LayerGroup>
+				</Overlay>
+			</LayersControl>
 				</Map>
 			</div>
 		);
