@@ -34,8 +34,8 @@ class LeafletMap extends Component {
 			Load users log 
 		********************************************************************************/
 
-		let url = "http://127.0.0.1:8000/"
-		// let url = "https://apic19gt.tranquanghuy.me/"
+		// let url = "http://127.0.0.1:8000/"
+		let url = "https://apic19gt.tranquanghuy.me/"
 		let path = "logs/log/"
 
 		let myHeaders = new Headers();
