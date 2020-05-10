@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-	BrowserRouter,
-	Route,
-	Switch,
-} from 'react-router-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import BrowserRouter from 'react-router-dom/BrowserRouter';
+import Route from 'react-router-dom/Route';
+import Switch from 'react-router-dom/Switch';
 
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import * as firebase from 'firebase';
+
+import * as serviceWorker from './serviceWorker';
+import App from './App';
 
 
 // Your web app's Firebase configuration

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import {
 	Map,
@@ -15,7 +15,7 @@ import MarkerCard from './MarkerCard';
 
 const { BaseLayer, Overlay } = LayersControl
 
-class LeafletMap extends Component {
+class LeafletMap extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {

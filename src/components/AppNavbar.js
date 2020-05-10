@@ -1,333 +1,31 @@
 import React from "react";
-import {
-	Navbar,
-	Nav,
-	Modal,
-	Button,
-	Form,
-	Row,
-	Col,
-	InputGroup
-} from 'react-bootstrap';
 
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-function RegisterModal(props) {
+import Badge from 'react-bootstrap/Badge';
 
-	const [user, setUser] = React.useState('');
-	const [email, setEmail] = React.useState('');
-	const [pass, setPass] = React.useState('');
+import LoginModal from './LoginModal';
+import RegisterModal from './RegisterModal';
+import UpdateTestRecordModal from './UpdateTestRecordModal'
 
-	async function register(evt) {
-
-		// let url = "http://127.0.0.1:8000/"
-		let url = "https://apic19gt.tranquanghuy.me/"
-		let path = "auth/register"
-
-		let myHeaders = new Headers();
-
-		let raw = {
-			username: user,
-			email: email,
-			password: pass
-		}
-
-		let body = JSON.stringify(raw)
-
-		let requestOptions = {
-			method: 'POST',
-			headers: myHeaders,
-			body: body,
-			redirect: 'follow',
-			credentials: 'include'
-		};
-
-		// indicate where there is error in request
-		let error;
-
-		await fetch(url + path, requestOptions)
-			.then(response => {
-				if (!response.ok) {
-					error = true;
-				} else {
-					error = false;
-				}
-				return response.json();
-			})
-			.then(data => {
-				if (error === false) {
-					console.log('Sign up successful')
-				} else if (error === true) {
-					console.log('Signup failed');
-					let msg = '';
-					for (let key in data) {
-						msg += key + ': ' + data[key] + '\n'
-					}
-					alert(msg);
-				}
-			})
-			.catch(
-				error => console.log('error', error)
-			);
-
-		props.onHide();
-		window.location.reload();
-	}
-
-	function handleKeyPress(event) {
-		if (event.key === 'Enter') {
-			register();
-		}
-	}
-
-	return (
-		<Modal
-			{...props}
-			size="sm"
-			aria-labelledby="contained-modal-title-vcenter"
-			centered
-		>
-			<Modal.Header closeButton>
-				<strong>Create an account</strong>
-			</Modal.Header>
-			<Modal.Body>
-				<Form role="form">
-					<Form.Group>
-						<InputGroup className="input-group-alternative mb-3">
-							<InputGroup.Prepend>
-								<InputGroup.Text>
-									<i className="fa" />
-								</InputGroup.Text>
-							</InputGroup.Prepend>
-							<Form.Control
-								placeholder="Username"
-								type="text"
-								onChange={e => setUser(e.target.value)}
-								onKeyPress={handleKeyPress}
-							/>
-						</InputGroup>
-					</Form.Group>
-					<Form.Group>
-						<InputGroup className="input-group-alternative mb-3">
-							<InputGroup.Prepend>
-								<InputGroup.Text>
-									<i className="fa" />
-								</InputGroup.Text>
-							</InputGroup.Prepend>
-							<Form.Control
-								placeholder="Email"
-								type="email"
-								onChange={e => setEmail(e.target.value)}
-								onKeyPress={handleKeyPress}
-							/>
-						</InputGroup>
-					</Form.Group>
-					<Form.Group>
-						<InputGroup className="input-group-alternative">
-							<InputGroup.Prepend>
-								<InputGroup.Text>
-									<i className="fa" />
-								</InputGroup.Text>
-							</InputGroup.Prepend>
-							<Form.Control
-								placeholder="Password"
-								type="password"
-								autoComplete="off"
-								onChange={e => setPass(e.target.value)}
-								onKeyPress={handleKeyPress}
-							/>
-						</InputGroup>
-					</Form.Group>
-					<Row className="my-1">
-						<Col xs="12">
-							<div className="custom-control custom-control-alternative custom-checkbox">
-								<input
-									className="custom-control-input"
-									id="customCheckRegister"
-									type="checkbox"
-								/>
-								<label
-									className="custom-control-label"
-									htmlFor="customCheckRegister"
-								>
-									<span>
-										I agree with the{" "}
-										<a
-											href="www.google.com"
-										>
-											Privacy Policy
-                                  		</a>
-									</span>
-								</label>
-							</div>
-						</Col>
-					</Row>
-					<div className="text-center">
-						<Button
-							className="mt-4 mb-0"
-							variant="primary"
-							type="button"
-							onClick={register}
-						>
-							Sign up
-                        </Button>
-					</div>
-				</Form>
-			</Modal.Body>
-
-		</Modal>
-	);
-}
-
-
-function LoginModal(props) {
-
-	const [user, setUser] = React.useState('');
-	const [pass, setPass] = React.useState('');
-
-	async function signIn(evt) {
-
-		// let url = "http://127.0.0.1:8000/"
-		let url = "https://apic19gt.tranquanghuy.me/"
-		let path = "auth/login"
-
-		let myHeaders = new Headers();
-
-		let raw = {
-			"username": user,
-			"password": pass
-		}
-
-		let body = JSON.stringify(raw)
-
-		let requestOptions = {
-			method: 'POST',
-			headers: myHeaders,
-			body: body,
-			redirect: 'follow',
-			credentials: 'include'
-		};
-
-		// indicate where there is error in request
-		let error;
-
-		await fetch(url + path, requestOptions)
-			.then(response => {
-				if (!response.ok) {
-					error = true;
-				} else {
-					error = false;
-				}
-				return response.json();
-			})
-			.then(data => {
-				if (error === false) {
-					console.log('Logged in')
-				} else if (error === true) {
-					console.log('Login failed');
-					let msg = '';
-					for (let key in data) {
-						msg += key + ': ' + data[key] + '\n'
-					}
-					alert(msg);
-				}
-			})
-			.catch(
-				error => console.log('error', error)
-			);
-
-		props.onHide();
-		window.location.reload();
-	}
-
-	function handleKeyPress(event) {
-		if (event.key === 'Enter') {
-			signIn();
-		}
-	}
-
-
-	return (
-		<Modal
-			{...props}
-			size="sm"
-			aria-labelledby="contained-modal-title-vcenter"
-			centered
-		>
-			<Modal.Header closeButton>
-				<Modal.Title id="contained-modal-title-vcenter">
-					<strong>Sign in</strong>
-				</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-				<Form role="form">
-					<Form.Group className="mb-3">
-						<InputGroup className="input-group-alternative">
-							<InputGroup.Prepend>
-								<InputGroup.Text>
-									<i className="fa" />
-								</InputGroup.Text>
-							</InputGroup.Prepend>
-							<Form.Control
-								placeholder="Username"
-								type="text"
-								onChange={e => setUser(e.target.value)}
-								onKeyPress={handleKeyPress}
-							/>
-						</InputGroup>
-					</Form.Group>
-					<Form.Group>
-						<InputGroup className="input-group-alternative">
-							<InputGroup.Prepend>
-								<InputGroup.Text>
-									<i className="fa" />
-								</InputGroup.Text>
-							</InputGroup.Prepend>
-							<Form.Control
-								placeholder="Password"
-								type="password"
-								autoComplete="off"
-								onChange={e => setPass(e.target.value)}
-								onKeyPress={handleKeyPress}
-							/>
-						</InputGroup>
-					</Form.Group>
-					<div className="custom-control custom-control-alternative custom-checkbox">
-						<input
-							className="custom-control-input"
-							id=" customCheckLogin"
-							type="checkbox"
-						/>
-						<label
-							className="custom-control-label"
-							htmlFor=" customCheckLogin"
-						>
-							<span>Remember me</span>
-						</label>
-					</div>
-					<div className="text-center">
-						<Button
-							className="mt-4 mb-0"
-							variant="primary"
-							size="sm"
-							type="button"
-							onClick={signIn}
-						>
-							Sign in
-                        </Button>
-					</div>
-				</Form>
-			</Modal.Body>
-		</Modal>
-	);
-}
 
 function AppNavbar() {
 
 	const [login, setLogin] = React.useState(false);
 	const [register, setRegister] = React.useState(false);
+	const [updateTestRecord, setUpdateTestRecord] = React.useState(false);
 	const [authStatus, setAuthStatus] = React.useState(null);
+	const [badgeVariant, setBadgeVariant] = React.useState('');
+	const [testRecordJson, setTestRecordJson] = React.useState({});
+	const [badgeText, setBadgeText] = React.useState('');
+	const [fetchDone, setFetchDone] = React.useState(false);
 
-	React.useEffect((e) => {
+	React.useEffect(() => {
+
 		async function checkLoginStatus() {
 
 			// let url = "http://127.0.0.1:8000/"
@@ -344,30 +42,73 @@ function AppNavbar() {
 				credentials: 'include'
 			}
 
-			let error;
-
 			await fetch(url + path, requestOptions)
 				.then(response => {
 					if (response.ok) {
-						error = false;
-					} else {
-						error = true;
-					}
-					return response.json();
-				}
-				)
-				.then(result => {
-					if (error === false) {
 						setAuthStatus(true);
 					} else {
 						setAuthStatus(false);
+
 					}
 				})
 				.catch(error => console.log('error', error));
 
 		}
+
+		async function getTestRecord() {
+
+			// let url = "http://127.0.0.1:8000/";
+			let url = "https://apic19gt.tranquanghuy.me/";
+			let path = "logs/teststatus/";
+
+			let myHeaders = new Headers();
+
+			let requestOptions = {
+				method: 'GET',
+				headers: myHeaders,
+				redirect: 'follow',
+				credentials: 'include'
+			};
+
+			let status;
+
+			await fetch(url + path, requestOptions)
+				.then(response => {
+					if (response.status === 200) {
+						status = 200;
+						return response.json();
+					} else if (response.status === 204) {
+						status = 204;
+					}
+				}).then(data => {
+					if (status === 200) {
+						setTestRecordJson(data);
+						if (data.positive === true) {
+							setBadgeVariant("warning");
+							setBadgeText("Date tested: " + Object.values(data)[0]);
+						} else if (data.positive === false) {
+							setBadgeVariant("success");
+							setBadgeText("Date tested: " + Object.values(data)[0]);
+						}
+					} else if (status === 204) {
+						setTestRecordJson(
+							{
+								status: "No record of COVID-19 postive test."
+							}
+						);
+						setBadgeVariant("info");
+						setBadgeText("No record of COVID-19 postive test.");
+					}
+				})
+				.catch(error => console.log('error', error));
+
+		}
+
 		checkLoginStatus();
-	});
+		getTestRecord();
+		setFetchDone(true);
+
+	}, [fetchDone]);
 
 	async function logOut() {
 		// let url = "http://127.0.0.1:8000/"
@@ -415,7 +156,7 @@ function AppNavbar() {
 								<div className="px-1" style={{ maxWidth: "60px" }}>
 									<Button variant="primary" size="sm" onClick={() => setLogin(true)}>
 										Login
-									  </Button>
+									</Button>
 									<LoginModal
 										show={login}
 										onHide={() => setLogin(false)}
@@ -443,7 +184,9 @@ function AppNavbar() {
 					<Row className="m-auto" style={{ width: "100%" }}>
 						<Col className="px-0">
 							<Navbar.Brand className="pl-2 mr-0">
-								<strong>Covid-19 Tracker</strong>{" "}<small>(right click to add marker)</small>
+								<strong>Covid-19 Tracker</strong>{" "}
+								<small>(right click to add marker)</small>{" "}
+								<Badge pill variant={badgeVariant} size='sm'>{badgeText}</Badge>
 							</Navbar.Brand>
 						</Col>
 						<Col className="px-0 d-none d-md-block">
@@ -451,18 +194,26 @@ function AppNavbar() {
 						<Col className="m-auto px-0">
 							<Nav className="justify-content-end" style={{ width: "100%", float: "right" }}>
 								<div className="px-1 pr-2">
+									<Button variant='info' size='sm' onClick={() => setUpdateTestRecord(true)}>Update test record</Button>{" "}
+									<UpdateTestRecordModal
+										show={updateTestRecord}
+										onHide={() => setUpdateTestRecord(false)}
+										date_tested={testRecordJson.date_tested}
+										badge_text={badgeText}
+									/>
 									<Button variant="primary" size="sm" onClick={logOut}>
 										Sign out
-									</Button>
+								</Button>
 								</div>
 							</Nav>
 						</Col>
 					</Row>
 				</Navbar>
-			</div>
+			</div >
 		);
 	}
 
 }
+
 
 export default AppNavbar;

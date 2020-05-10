@@ -1,10 +1,8 @@
 import React from "react";
 
-import {
-    Button,
-    Form,
-    Card
-} from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card'
 
 function MarkerCard(props) {
 
@@ -61,8 +59,8 @@ function MarkerCard(props) {
     async function handleDelete(e) {
         e.preventDefault();
 
-        // let url = "http://127.0.0.1:8000/"
-        let url = "https://apic19gt.tranquanghuy.me/"
+        // let url = "http://127.0.0.1:8000/";
+        let url = "https://apic19gt.tranquanghuy.me/";
         let path = "logs/log/"
 
         let myHeaders = new Headers();
@@ -93,24 +91,22 @@ function MarkerCard(props) {
 
     return (
         <Card style={{ width: "260px" }}>
+            <Card.Header className='p-1'><h6 className='m-0'>Location Information</h6></Card.Header>
             <Card.Body>
-                <Card.Title>Location Information</Card.Title>
                 <Form>
-                    <Form.Group controlId="startTimeControl">
+                    <Form.Group controlId="start-time">
                         <Form.Label>Start Time</Form.Label>
                         <Form.Control
                             type="datetime-local"
                             value={startTime}
-                            // placeholder="MM/DD/YYYY 00:00:00 AM"
                             onChange={e => setStartTime(e.target.value)}
                         />
                     </Form.Group>
-                    <Form.Group controlId="endTimeControl">
+                    <Form.Group controlId="end-time">
                         <Form.Label>End Time</Form.Label>
                         <Form.Control
                             type="datetime-local"
                             value={endTime}
-                            // placeholder="MM/DD/YYYY 00:00 AM"
                             onChange={e => setEndTime(e.target.value)}
                         />
                     </Form.Group>
