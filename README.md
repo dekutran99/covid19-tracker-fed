@@ -1,3 +1,10 @@
+# Covid 19 GeoTracker - Frontend
+## Project Test Run
+To try out this web application: https://covid19geotracker.tranquanghuy.me/
+## Table of Contents
+   * [Project Description](#project-description)
+   * [Techonologies](#technologies)
+   * [App Screenshots](#app-screenshots)
 ## App Screenshots
 #### Main page with no user logged in
 ![alter text](https://github.com/dekutran99/covid-19-tracker-fed/blob/master/demo_pics/main_auth_null_false.png)
