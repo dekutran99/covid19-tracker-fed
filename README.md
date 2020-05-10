@@ -7,9 +7,9 @@ To try out this web application: https://covid19geotracker.tranquanghuy.me/
    * [App Screenshots](#app-screenshots)
 ## Project Description
 ## Technologies
-   * React@16.13.1
+   * React (react@16.13.1)
    * Bootstrap/React Bootstrap (react-bootstrap@1.0.1)
-   * Leaflet/React-Leaflet@2.7.0
+   * Leaflet/React-Leaflet (react-leaflet)@2.7.0
 ## App Screenshots
 #### Main page with no user logged in
 ![alter text](https://github.com/dekutran99/covid-19-tracker-fed/blob/master/demo_pics/main_auth_null_false.png)
