@@ -5,6 +5,8 @@ To try out this web application: https://covid19geotracker.tranquanghuy.me/
    * [Project Description](#project-description)
    * [Techonologies](#technologies)
    * [App Screenshots](#app-screenshots)
+## Project Description
+## Technologies
 ## App Screenshots
 #### Main page with no user logged in
 ![alter text](https://github.com/dekutran99/covid-19-tracker-fed/blob/master/demo_pics/main_auth_null_false.png)
