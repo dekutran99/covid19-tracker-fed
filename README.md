@@ -1,4 +1,4 @@
-# Covid 19 GeoTracker - Frontend
+# COVID-19 GeoTracker - Frontend
 ## Project Test Run
 To try out this web application: https://covid19geotracker.tranquanghuy.me/
 ## Table of Contents
@@ -6,6 +6,7 @@ To try out this web application: https://covid19geotracker.tranquanghuy.me/
    * [Techonologies](#technologies)
    * [App Screenshots](#app-screenshots)
 ## Project Description
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COVID-19 GeoTracker
 ## Technologies
    * React (react@16.13.1)
    * Bootstrap/React Bootstrap (react-bootstrap@1.0.1)
