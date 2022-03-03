@@ -1,6 +1,5 @@
 # COVID-19 GeoTracker - Frontend
 ## Table of Contents
-   * [Project Description](#project-description)
    * [Techonologies](#technologies)
    * [App Screenshots](#app-screenshots)
 ## Technologies
