@@ -1,6 +1,4 @@
 # COVID-19 GeoTracker - Frontend
-## Project Test Run
-To try out this web application: https://covid19geotracker.tranquanghuy.me/
 ## Table of Contents
    * [Project Description](#project-description)
    * [Techonologies](#technologies)
